@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mazen
+    username: Mazen
+    password: mazen12
+    #    driver-class-name: org.postgresql.Driver
+    hibernate:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
