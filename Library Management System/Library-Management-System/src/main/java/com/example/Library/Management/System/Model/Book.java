@@ -1,82 +1,43 @@
 package com.example.Library.Management.System.Model;
-import jakarta.persistence.*;
-import lombok.NoArgsConstructor;
 
-import java.util.Date;
-import java.util.List;
+public class Book extends com.example.library.model.LibraryItem {
 
-@Entity
-@NoArgsConstructor
-public class Book {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @Column(nullable = false)
-    private String title;
-
-    @Column(nullable = false)
     private String author;
+    private int pageCount;
 
-    @Column(nullable = false)
-    private Date publicationYear;
+    public Book(String itemId, String title, String category,
+                String author, int pageCount) {
+        super(itemId, title, category);
+        setAuthor(author);
+        setPageCount(pageCount);
+    }
 
-    @Column(nullable = false)
-    private int isbn;
-
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
-    private List<BorrowingRecord> borrowingRecords;
-
-    public Book(int id, String title, String author, Date publicationYear, int isbn) {
-        this.id = id;
-        this.title = title;
+    public void setAuthor(String author) {
+        if (author == null || author.trim().isEmpty()) {
+            throw new IllegalArgumentException("Author cannot be empty.");
+        }
         this.author = author;
-        this.publicationYear = publicationYear;
-        this.isbn = isbn;
     }
 
-    public int getId() {
-        return id;
+    private void setPageCount(int pageCount) {
+        if (pageCount <= 0) {
+            throw new IllegalArgumentException("Page count must be greater than 0.");
+        }
+        this.pageCount = pageCount;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    @Override
+    public void displayInfo() {
+        printCommon();
+        System.out.println("Author: " + author);
+        System.out.println("Page Count: " + pageCount);
     }
 
     public String getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public int getPageCount() {
+        return pageCount;
     }
-
-    public Date getPublicationYear() {
-        return publicationYear;
-    }
-
-    public void setPublicationYear(Date publicationYear) {
-        this.publicationYear = publicationYear;
-    }
-
-    public int getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(int isbn) {
-        this.isbn = isbn;
-    }
-
-
-
-
 }
